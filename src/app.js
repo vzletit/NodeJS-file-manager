@@ -10,9 +10,10 @@ import * as files from './modules/files.js';
 import opSys from './modules/opSys.js'
 
 const userName = parseCliArg(process.argv.slice(2), 'username');
-const defaultDir = process.env.USERPROFILE;
+const defaultDir = os.userInfo().homedir
 let currentDir = defaultDir;
 
+// Messages
 const sayHello = (userName = 'Anonymous') =>  render({renderMessage: `${os.EOL}Welcome to the File Manager, ${userName}!${os.EOL}` })
 const printCurrentDir = (dir = defaultDir) => render({renderMessage: `${os.EOL}You are currently in ${dir}`})
 const sayByeByeAndExit = (userName = 'Anonymous') => {
@@ -20,6 +21,7 @@ const sayByeByeAndExit = (userName = 'Anonymous') => {
     process.exit();
 }
 const showError = () => render({renderMessage:`Invalid input`, renderType: 'error'});
+
 
 const handleResults = (returnedObj) => { 
     currentDir = returnedObj?.newCwd || currentDir; 
@@ -56,7 +58,6 @@ export default async () => {
         const [userCommand, ...argsArr] = input
             .toString()
             .replace(os.EOL, "")
-            //.replace(/(\r\n|\n|\r)/gm, "")
             .split(' ');
         const userArgsArr = argsArr.filter(item => item);
         
