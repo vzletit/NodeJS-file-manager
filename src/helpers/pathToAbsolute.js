@@ -2,10 +2,11 @@ import path from 'path';
 
 export default (cwd, pathToCheck) => {
         const { root } = path.parse(cwd);
-//console.log({root})
-        if (['/', '\\'].includes(pathToCheck)) {return root}
-        if (pathToCheck.endsWith(':') ) {return pathToCheck + path.sep}
-              
+
+        if (pathToCheck[1] === ':') {return pathToCheck}
+           
+        console.log({root, cwd, pathToCheck,abs: path.isAbsolute(pathToCheck), return: path.join(cwd, pathToCheck) })
+
         return path.isAbsolute(pathToCheck)
-        ? pathToCheck
-        : path.join(cwd, pathToCheck);}
+         ? path.join(root, pathToCheck)
+         : path.join(cwd, pathToCheck);}
