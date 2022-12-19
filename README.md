@@ -5,6 +5,9 @@
 The file manager works using CLI and performs basic file operations (copy, move, delete, rename, etc.), 
 get information about the host machine operating system, performs hash calculations, compresses and decompressed files. It utilizes Streams API.
 No external dependencies used.
+
+Tested under Windows 10 and Linux Ubuntu 20. 
+
 - The program is started by npm-script `start` in following way:
 ```bash
 npm run start -- --username=your_username
@@ -79,10 +82,10 @@ npm run start -- --username=your_username
 - Compress and decompress operations  
     - Compress file (using Brotli algorithm, done using Streams API)  
     ```bash
-    compress path_to_file path_to_destination
+    compress path_to_file path_to_destination_file
     ```
     - Decompress file (using Brotli algorithm, done using Streams API)  
     ```bash
-    decompress path_to_file path_to_destination
+    decompress path_to_file path_to_destination_file
     ```  
     
