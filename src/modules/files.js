@@ -9,10 +9,10 @@ export const cat = async (cwd, givenPath) => {
     const readF = new Promise((resolve) => {
         const filePath = pathToAbsolute(cwd, givenPath);
         const readFile = fs.createReadStream(filePath);
-        const resultObj = {}
+        const resultArr = []
         const errorObj = {renderType: 'error' }
-        readFile.on('data', chunk => { resultObj.renderMessage += chunk })
-        readFile.on('end', () => resolve(resultObj))
+        readFile.on('data', chunk => { resultArr.push(chunk) })
+        readFile.on('end', () => resolve({renderMessage: resultArr.join('')}))
         readFile.on('error', () => resolve(errorObj))        
     })
 
