@@ -1,4 +1,5 @@
 import os from 'os';
+import readLine from 'node:readline'
 import allArgsValid from './helpers/validateArgs.js'
 import parseCliArg from './helpers/parseCliArg.js';
 import hash from './modules/hash.js';
@@ -11,6 +12,7 @@ import opSys from './modules/opSys.js'
 
 const userName = parseCliArg(process.argv.slice(2), 'username');
 const defaultDir = os.userInfo().homedir
+const prompt = '\x1b[36m' + '> ' + '\x1b[0m'
 let currentDir = defaultDir;
 
 // Messages
@@ -48,13 +50,22 @@ const mapCommandToFunction = {
 
 export default async () => {
 
+    const rl = readLine.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+        prompt: prompt
+      }); 
+
+    
     sayHello(userName);
     process.on('SIGINT', () => sayByeByeAndExit(userName))
 
     printCurrentDir();    
-    process.stdout.write('\x1b[36m' + '> ' + '\x1b[0m')
+    process.stdout.write(prompt)
+    
 
-    process.stdin.on('data', async input => {
+
+    rl.on('line', async input => {
         const [userCommand, ...argsArr] = input
             .toString()
             .replace(os.EOL, "")
@@ -66,7 +77,7 @@ export default async () => {
         else { showError() }
 
         printCurrentDir(currentDir);
-        process.stdout.write('\x1b[36m' + '> ' + '\x1b[0m')
+        process.stdout.write(prompt)
     })
 
 }
